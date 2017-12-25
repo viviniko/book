@@ -14,6 +14,8 @@ interface AttributeGroupRepository
      */
     public function paginate($pageSize, $searchName = 'search', $search = null);
 
+    public function listWithAttributes();
+
     /**
      * Find data by id
      *

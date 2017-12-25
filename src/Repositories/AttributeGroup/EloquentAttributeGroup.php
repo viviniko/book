@@ -24,4 +24,12 @@ class EloquentAttributeGroup extends SimpleRepository implements AttributeGroupR
 
         return $items;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function listWithAttributes()
+    {
+        return $this->createModel()->newQuery()->with(['attributes'])->get();
+    }
 }
