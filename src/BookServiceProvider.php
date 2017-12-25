@@ -51,6 +51,8 @@ class BookServiceProvider extends BaseServiceProvider
 
         $this->registerRepositories();
 
+        $this->registerBookService();
+
         $this->registerCommands();
     }
 
@@ -99,6 +101,14 @@ class BookServiceProvider extends BaseServiceProvider
         );
     }
 
+    protected function registerBookService()
+    {
+        $this->app->singleton(
+            \Viviniko\Book\Contracts\BookService::class,
+            \Viviniko\Book\Services\BookServiceImpl::class
+        );
+    }
+
 
     /**
      * Get the services provided by the provider.
@@ -108,6 +118,7 @@ class BookServiceProvider extends BaseServiceProvider
     public function provides()
     {
         return [
+            \Viviniko\Book\Contracts\BookService::class,
             \Viviniko\Book\Repositories\Attribute\AttributeRepository::class,
             \Viviniko\Book\Repositories\AttributeGroup\AttributeGroupRepository::class,
             \Viviniko\Book\Repositories\Book\BookRepository::class,
