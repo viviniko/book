@@ -36,4 +36,12 @@ class EloquentCategory extends SimpleRepository implements CategoryRepository
 
         return $children;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function flattenList()
+    {
+        return flatten_tree(build_tree($this->all()));
+    }
 }

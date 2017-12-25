@@ -113,6 +113,7 @@ class CreateBookTable extends Migration
             $table->unsignedInteger('book_id');
             $table->unsignedInteger('number');
             $table->string('title', 64);
+            $table->string('description');
             $table->timestamps();
 
             $table->foreign('book_id')->references('id')->on($this->booksTable)

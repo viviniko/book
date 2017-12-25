@@ -21,6 +21,11 @@ interface CategoryRepository
     public function all();
 
     /**
+     * @return array
+     */
+    public function flattenList();
+
+    /**
      * Find data by id
      *
      * @param       $id
