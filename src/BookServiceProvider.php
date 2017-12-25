@@ -4,6 +4,12 @@ namespace Viviniko\Book;
 
 use Viviniko\Book\Console\Commands\BookTableCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Viviniko\Book\Models\Category;
+use Viviniko\Book\Models\Chapter;
+use Viviniko\Book\Models\Content;
+use Viviniko\Book\Observers\CategoryObserver;
+use Viviniko\Book\Observers\ChapterObserver;
+use Viviniko\Book\Observers\ContentObserver;
 
 class BookServiceProvider extends BaseServiceProvider
 {
@@ -25,6 +31,10 @@ class BookServiceProvider extends BaseServiceProvider
         $this->publishes([
             __DIR__.'/../config/book.php' => config_path('book.php'),
         ]);
+
+        Category::observe(CategoryObserver::class);
+        Chapter::observe(ChapterObserver::class);
+        Content::observe(ContentObserver::class);
 
         // Register commands
         $this->commands('command.book.table');

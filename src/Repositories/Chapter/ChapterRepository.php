@@ -52,4 +52,10 @@ interface ChapterRepository
      * @return int
      */
     public function delete($id);
+
+    public function countWordsByBookId($bookId);
+
+    public function getLatestChapterByBookId($bookId);
+
+    public function countChapterByBookId($bookId);
 }

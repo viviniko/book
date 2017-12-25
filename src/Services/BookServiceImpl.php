@@ -25,4 +25,25 @@ class BookServiceImpl implements BookService
         $this->chapterRepository = $chapterRepository;
         $this->contentRepository = $contentRepository;
     }
+
+    public function updateBookState($bookId)
+    {
+        $data = [];
+        $book = $this->bookRepository->find($bookId);
+        $wordCount = $this->chapterRepository->countWordsByBookId($bookId);
+        if ($wordCount != $book->word_count) {
+            $data['word_count'] = $wordCount;
+        }
+        $latestChapter = $this->chapterRepository->getLatestChapterByBookId($bookId);
+        if ($latestChapter->number != $book->latest_chapter) {
+            $data['latest_chapter'] = $latestChapter->number;
+        }
+        $chapterCount = $this->chapterRepository->countChapterByBookId($bookId);
+        if ($chapterCount != $book->chapter_count) {
+            $data['chapter_count'] = $chapterCount;
+        }
+
+        if (!empty($data))
+            $this->bookRepository->update($bookId, $data);
+    }
 }
