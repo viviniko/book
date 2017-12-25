@@ -5,6 +5,17 @@ namespace Viviniko\Book\Repositories\Attribute;
 interface AttributeRepository
 {
     /**
+     * Paginate attributes.
+     *
+     * @param $groupId
+     * @param $pageSize
+     * @param string $searchName
+     * @param null $search
+     * @return mixed
+     */
+    public function paginate($groupId, $pageSize, $searchName = 'search', $search = null);
+
+    /**
      * Get filterable attributes
      *
      * @param mixed $id
