@@ -17,4 +17,14 @@ class Chapter extends Model
     {
         return $this->belongsTo(Config::get('book.book'));
     }
+
+    public function chapterContent()
+    {
+        return $this->hasOne(Config::get('book.content'));
+    }
+
+    public function getContentAttribute()
+    {
+        return data_get($this->chapterContent, 'content');
+    }
 }

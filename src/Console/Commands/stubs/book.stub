@@ -123,13 +123,10 @@ class CreateBookTable extends Migration
         // Create table for storing contents
         Schema::create($this->contentsTable, function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('book_id');
             $table->unsignedInteger('chapter_id');
             $table->longText('content');
             $table->timestamps();
 
-            $table->foreign('book_id')->references('id')->on($this->booksTable)
-                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('chapter_id')->references('id')->on($this->chaptersTable)
                 ->onUpdate('cascade')->onDelete('cascade');
         });
