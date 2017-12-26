@@ -2,6 +2,7 @@
 
 namespace Viviniko\Book\Services;
 
+use Illuminate\Support\Collection;
 use Viviniko\Book\Contracts\BookService;
 use Viviniko\Book\Repositories\Book\BookRepository;
 use Viviniko\Book\Repositories\Chapter\ChapterRepository;
@@ -45,5 +46,10 @@ class BookServiceImpl implements BookService
 
         if (!empty($data))
             $this->bookRepository->update($bookId, $data);
+    }
+
+    public function buildBookChaptersNumber($bookId)
+    {
+        $tree = $this->chapterRepository->getChaptersTreeByBookId($bookId);
     }
 }

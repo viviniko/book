@@ -62,4 +62,6 @@ interface ChapterRepository
     public function getMaxNumberByBookId($bookId);
 
     public function countChapterByBookId($bookId);
+
+    public function getChaptersTreeByBookId($bookId, $parentId = 0);
 }

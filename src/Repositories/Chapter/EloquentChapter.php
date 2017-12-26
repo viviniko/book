@@ -2,6 +2,7 @@
 
 namespace Viviniko\Book\Repositories\Chapter;
 
+use Illuminate\Support\Collection;
 use Viviniko\Book\Enums\ChapterStatus;
 use Viviniko\Book\Enums\ChapterType;
 use Viviniko\Repository\SimpleRepository;
@@ -81,5 +82,21 @@ class EloquentChapter extends SimpleRepository implements ChapterRepository
         return $this->createModel()
             ->where(['book_id' => $bookId])
             ->max('number');
+    }
+
+    public function getChaptersTreeByBookId($bookId, $parentId = 0)
+    {
+        $collection = $this->getChaptersByBookId($bookId);
+        $parentKey = 'parent_id';
+        $groupNodes = $collection->groupBy($parentKey);
+
+        return $collection
+            ->map(function($item) use ($groupNodes) {
+                $item->text = $item->title;
+                $item->setRelation('children', Collection::make($groupNodes->get($item->id, [])));
+                return $item;
+            })->filter(function($item) use ($parentId, $parentKey) {
+                return $item->{$parentKey} == $parentId;
+            })->values();
     }
 }
