@@ -10,7 +10,7 @@ class Chapter extends Model
     protected $tableConfigKey = 'book.chapters_table';
 
     protected $fillable = [
-        'book_id', 'parent_id', 'path', 'title', 'description', 'status', 'word_count', 'number'
+        'book_id', 'parent_id', 'path', 'title', 'description', 'status', 'word_count', 'number', 'sort',
     ];
 
     public function book()

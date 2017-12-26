@@ -119,6 +119,7 @@ class CreateBookTable extends Migration
             $table->string('status', 32);
             $table->unsignedInteger('word_count')->default(0);
             $table->unsignedInteger('number')->default(0);
+            $table->unsignedInteger('sort')->default(0);
             $table->timestamps();
 
             $table->foreign('book_id')->references('id')->on($this->booksTable)
