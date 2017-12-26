@@ -25,9 +25,8 @@ class ChapterObserver
         $path = trim($path . '/' . $chapter->id, '/');
         if ($chapter->path != $path) {
             $this->chapters->update($chapter->id, ['path' => $path]);
-        } else {
-            $this->bookService->updateBookState($chapter->book_id);
         }
+        $this->bookService->updateBookState($chapter->book_id);
     }
 
     public function deleted(Chapter $chapter)
