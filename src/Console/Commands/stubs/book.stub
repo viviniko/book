@@ -111,6 +111,8 @@ class CreateBookTable extends Migration
         Schema::create($this->chaptersTable, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('book_id');
+            $table->unsignedInteger('type')->default(0);
+            $table->unsignedInteger('parent_id')->default(0);
             $table->unsignedInteger('number');
             $table->string('title', 64);
             $table->string('description');
