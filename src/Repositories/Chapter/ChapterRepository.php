@@ -15,6 +15,8 @@ interface ChapterRepository
      */
     public function paginate($bookId, $pageSize, $searchName = 'search', $search = null);
 
+    public function getChaptersByBookId($bookId, $type = null, $status = null);
+
     /**
      * Find data by id
      *

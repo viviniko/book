@@ -26,6 +26,21 @@ class EloquentChapter extends SimpleRepository implements ChapterRepository
         return $items;
     }
 
+    public function getChaptersByBookId($bookId, $type = null, $status = null)
+    {
+        $where = [
+            'book_id' => $bookId,
+        ];
+        if (!is_null($type)) {
+            $where['type'] = $type;
+        }
+        if (!is_null($status)) {
+            $where['status'] = $status;
+        }
+
+        return $this->createModel()->where($where)->get();
+    }
+
     /**
      * {@inheritdoc}
      */
