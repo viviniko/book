@@ -35,8 +35,12 @@ class BookServiceImpl implements BookService
             $data['word_count'] = $wordCount;
         }
         $latestChapter = $this->chapterRepository->getLatestChapterByBookId($bookId);
-        if ($latestChapter->number != $book->latest_chapter) {
-            $data['latest_chapter'] = $latestChapter->number;
+        if ($latestChapter->id != $book->latest_chapter_id) {
+            $data['latest_chapter_id'] = $latestChapter->id;
+        }
+        $maxNumber = $this->chapterRepository->getMaxNumberByBookId($bookId);
+        if ($maxNumber != $book->chapter_max_number) {
+            $data['chapter_max_number'] = $maxNumber;
         }
 
         if (!empty($data))

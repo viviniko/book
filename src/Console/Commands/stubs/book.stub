@@ -93,8 +93,8 @@ class CreateBookTable extends Migration
             $table->string('author', 32);
             $table->string('cover');
             $table->string('description');
-            $table->unsignedInteger('latest_chapter')->default(0);
-            $table->unsignedInteger('chapter_count')->default(0);
+            $table->unsignedInteger('latest_chapter_id')->default(0);
+            $table->unsignedInteger('chapter_max_number')->default(0);
             $table->boolean('is_end')->default(false);
             $table->unsignedInteger('word_count')->default(0);
             $table->unsignedInteger('category_id');

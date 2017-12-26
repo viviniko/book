@@ -3,6 +3,7 @@
 namespace Viviniko\Book\Repositories\Chapter;
 
 use Viviniko\Book\Enums\ChapterStatus;
+use Viviniko\Book\Enums\ChapterType;
 use Viviniko\Repository\SimpleRepository;
 
 class EloquentChapter extends SimpleRepository implements ChapterRepository
@@ -57,7 +58,7 @@ class EloquentChapter extends SimpleRepository implements ChapterRepository
     public function getLatestChapterByBookId($bookId)
     {
         return $this->createModel()
-            ->where(['book_id' => $bookId, 'status' => ChapterStatus::PUBLISHED])
+            ->where(['book_id' => $bookId, 'status' => ChapterStatus::PUBLISHED, 'type' => ChapterType::CHAPTER])
             ->orderBy('number', 'desc')
             ->first();
     }
@@ -68,7 +69,17 @@ class EloquentChapter extends SimpleRepository implements ChapterRepository
     public function countChapterByBookId($bookId)
     {
         return $this->createModel()
-            ->where(['book_id' => $bookId, 'status' => ChapterStatus::PUBLISHED])
+            ->where(['book_id' => $bookId, 'status' => ChapterStatus::PUBLISHED, 'type' => ChapterType::CHAPTER])
             ->count();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMaxNumberByBookId($bookId)
+    {
+        return $this->createModel()
+            ->where(['book_id' => $bookId])
+            ->max('number');
     }
 }

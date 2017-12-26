@@ -59,5 +59,7 @@ interface ChapterRepository
 
     public function getLatestChapterByBookId($bookId);
 
+    public function getMaxNumberByBookId($bookId);
+
     public function countChapterByBookId($bookId);
 }

@@ -10,7 +10,7 @@ class Book extends Model
     protected $tableConfigKey = 'book.books_table';
 
     protected $fillable = [
-        'name', 'author', 'cover', 'description', 'latest_chapter', 'chapter_count', 'is_end',
+        'name', 'author', 'cover', 'description', 'latest_chapter_id', 'chapter_max_number', 'is_end',
         'word_count', 'category_id', 'is_active', 'url_rewrite'
     ];
 
@@ -22,6 +22,11 @@ class Book extends Model
     public function category()
     {
         return $this->belongsTo(Config::get('book.category'), 'category_id');
+    }
+
+    public function lastestChapter()
+    {
+        return $this->belongsTo(Config::get('book.chapter'), 'latest_chapter_id');
     }
 
     public function chapters()
