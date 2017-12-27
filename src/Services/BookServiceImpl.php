@@ -50,12 +50,8 @@ class BookServiceImpl implements BookService
 
     public function buildBookChaptersNumber($bookId)
     {
-        $tree = $this->chapterRepository->getChaptersTreeByBookId($bookId);
-
         $number = 1;
-        foreach ($tree as $chapters) {
-            $this->updateGroupChaptersNumber($chapters, $number);
-        }
+        $this->updateGroupChaptersNumber($this->chapterRepository->getChaptersTreeByBookId($bookId), $number);
     }
 
     protected function updateGroupChaptersNumber($chapters, &$number)
