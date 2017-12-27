@@ -86,7 +86,7 @@ class EloquentChapter extends SimpleRepository implements ChapterRepository
 
     public function getChaptersTreeByBookId($bookId, $parentId = 0)
     {
-        $collection = $this->getChaptersByBookId($bookId);
+        $collection = $this->getChaptersByBookId($bookId)->sortBy('sort');
         $parentKey = 'parent_id';
         $groupNodes = $collection->groupBy($parentKey);
 

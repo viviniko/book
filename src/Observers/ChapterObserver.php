@@ -26,6 +26,7 @@ class ChapterObserver
         if ($chapter->path != $path) {
             $this->chapters->update($chapter->id, ['path' => $path]);
         }
+        $this->bookService->buildBookChaptersNumber($chapter->book_id);
         $this->bookService->updateBookState($chapter->book_id);
     }
 
