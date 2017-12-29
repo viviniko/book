@@ -20,6 +20,11 @@ class CreateBookTable extends Migration
     /**
      * @var string
      */
+    protected $authorsTable;
+
+    /**
+     * @var string
+     */
     protected $booksTable;
 
     /**
@@ -54,6 +59,7 @@ class CreateBookTable extends Migration
     {
         $this->categoriesTable = Config::get('book.categories_table');
         $this->pressesTable = Config::get('book.presses_table');
+        $this->authorsTable = Config::get('book.authors_table');
         $this->booksTable = Config::get('book.books_table');
         $this->contentsTable = Config::get('book.contents_table');
         $this->chaptersTable = Config::get('book.chapters_table');
@@ -86,13 +92,22 @@ class CreateBookTable extends Migration
             $table->timestamps();
         });
 
+        // Create table for storing authors
+        Schema::create($this->authorsTable, function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nickname');
+            $table->string('avatar')->nullable();
+
+            $table->timestamps();
+        });
+
         // Create table for storing books
         Schema::create($this->booksTable, function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('author', 32);
             $table->string('cover');
             $table->string('description');
+            $table->unsignedInteger('author_id');
             $table->unsignedInteger('latest_chapter_id')->default(0);
             $table->unsignedInteger('chapter_max_number')->default(0);
             $table->boolean('is_end')->default(false);
@@ -102,6 +117,9 @@ class CreateBookTable extends Migration
 
             $table->string('url_rewrite')->nullable();
             $table->timestamps();
+
+            $table->foreign('author_id')->references('id')->on($this->authorsTable)
+                ->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreign('category_id')->references('id')->on($this->categoriesTable)
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -187,6 +205,7 @@ class CreateBookTable extends Migration
         Schema::dropIfExists($this->chaptersTable);
         Schema::dropIfExists($this->booksTable);
         Schema::dropIfExists($this->pressesTable);
+        Schema::dropIfExists($this->authorsTable);
         Schema::dropIfExists($this->categoriesTable);
     }
 }

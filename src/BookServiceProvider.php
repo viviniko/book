@@ -81,6 +81,11 @@ class BookServiceProvider extends BaseServiceProvider
         );
 
         $this->app->singleton(
+            \Viviniko\Book\Repositories\Author\AuthorRepository::class,
+            \Viviniko\Book\Repositories\Author\EloquentAuthor::class
+        );
+
+        $this->app->singleton(
             \Viviniko\Book\Repositories\Book\BookRepository::class,
             \Viviniko\Book\Repositories\Book\EloquentBook::class
         );
@@ -125,6 +130,7 @@ class BookServiceProvider extends BaseServiceProvider
             \Viviniko\Book\Repositories\Category\CategoryRepository::class,
             \Viviniko\Book\Repositories\Chapter\ChapterRepository::class,
             \Viviniko\Book\Repositories\Content\ContentRepository::class,
+            \Viviniko\Book\Repositories\Author\AuthorRepository::class,
         ];
     }
 }

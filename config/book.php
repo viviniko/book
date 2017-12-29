@@ -9,6 +9,7 @@ return [
     'attribute_groups_table' => 'book_attribute_groups',
     'attributes_table' => 'book_attributes',
     'book_attribute_table' => 'book_book_attribute',
+    'authors_table' => 'book_authors',
 
     'book' => 'Viviniko\Book\Models\Book',
     'category' => 'Viviniko\Book\Models\Category',
