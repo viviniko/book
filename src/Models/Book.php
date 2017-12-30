@@ -10,7 +10,7 @@ class Book extends Model
     protected $tableConfigKey = 'book.books_table';
 
     protected $fillable = [
-        'name', 'author', 'cover', 'description', 'latest_chapter_id', 'chapter_max_number', 'is_end',
+        'name', 'author_id', 'cover', 'description', 'latest_chapter_id', 'chapter_max_number', 'is_end',
         'word_count', 'category_id', 'is_active', 'url_rewrite'
     ];
 

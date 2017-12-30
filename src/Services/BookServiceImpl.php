@@ -2,8 +2,8 @@
 
 namespace Viviniko\Book\Services;
 
-use Illuminate\Support\Collection;
 use Viviniko\Book\Contracts\BookService;
+use Viviniko\Book\Repositories\Author\AuthorRepository;
 use Viviniko\Book\Repositories\Book\BookRepository;
 use Viviniko\Book\Repositories\Chapter\ChapterRepository;
 use Viviniko\Book\Repositories\Content\ContentRepository;
@@ -12,6 +12,8 @@ class BookServiceImpl implements BookService
 {
     protected $bookRepository;
 
+    protected $authorRepository;
+
     protected $chapterRepository;
 
     protected $contentRepository;
@@ -19,12 +21,14 @@ class BookServiceImpl implements BookService
     public function __construct(
         BookRepository $bookRepository,
         ChapterRepository $chapterRepository,
-        ContentRepository $contentRepository
+        ContentRepository $contentRepository,
+        AuthorRepository $authorRepository
     )
     {
         $this->bookRepository = $bookRepository;
         $this->chapterRepository = $chapterRepository;
         $this->contentRepository = $contentRepository;
+        $this->authorRepository = $authorRepository;
     }
 
     public function updateBookState($bookId)
