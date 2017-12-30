@@ -19,6 +19,11 @@ class Book extends Model
         'is_end' => 'boolean',
     ];
 
+    public function author()
+    {
+        return $this->belongsTo(Config::get('book.author'), 'author_id');
+    }
+
     public function category()
     {
         return $this->belongsTo(Config::get('book.category'), 'category_id');
