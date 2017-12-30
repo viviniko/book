@@ -17,4 +17,5 @@ return [
     'content' => 'Viviniko\Book\Models\Content',
     'attribute_group' => 'Viviniko\Book\Models\AttributeGroup',
     'attribute' => 'Viviniko\Book\Models\Attribute',
+    'author' => 'Viviniko\Book\Models\Author',
 ];
