@@ -31,6 +31,17 @@ class BookServiceImpl implements BookService
         $this->authorRepository = $authorRepository;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getBook($bookId)
+    {
+        return $this->bookRepository->find($bookId);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function updateBookState($bookId)
     {
         $data = [];
@@ -52,12 +63,18 @@ class BookServiceImpl implements BookService
             $this->bookRepository->update($bookId, $data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function buildBookChaptersNumber($bookId)
     {
         $number = 1;
         $this->updateGroupChaptersNumber($this->chapterRepository->getChaptersTreeByBookId($bookId), $number);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function updateGroupChaptersNumber($chapters, &$number)
     {
         foreach ($chapters as $chapter) {
