@@ -13,23 +13,6 @@ class EloquentAttribute extends SimpleRepository implements AttributeRepository
     /**
      * {@inheritdoc}
      */
-    public function paginate($groupId, $pageSize, $searchName = 'search', $search = null)
-    {
-        if (!$search) {
-            $search = request()->get($searchName);
-        }
-        $search = is_array($search) ? $search : [];
-        $items = $this->search(array_merge($search, ['group_id' => $groupId]))->paginate($pageSize);
-        if (!empty($search)) {
-            $items->appends([$searchName => $search]);
-        }
-
-        return $items;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getFilterableAttributes($id)
     {
         $specificationGroupTableName = Config::get('book.attribute_groups_table');

@@ -10,9 +10,10 @@ interface AuthorRepository
      * @param $pageSize
      * @param string $searchName
      * @param null $search
+     * @param null $order
      * @return mixed
      */
-    public function paginate($pageSize, $searchName = 'search', $search = null);
+    public function paginate($pageSize, $searchName = 'search', $search = null, $order = null);
 
     /**
      * Find data by id

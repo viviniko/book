@@ -12,23 +12,6 @@ class EloquentBook extends SimpleRepository implements BookRepository
     /**
      * {@inheritdoc}
      */
-    public function paginate($pageSize, $searchName = 'search', $search = null)
-    {
-        if (!$search) {
-            $search = request()->get($searchName);
-        }
-        $search = is_array($search) ? $search : [];
-        $items = $this->search($search)->paginate($pageSize);
-        if (!empty($search)) {
-            $items->appends([$searchName => $search]);
-        }
-
-        return $items;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $data)
     {
         $book = null;
