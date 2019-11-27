@@ -2,7 +2,7 @@
 
 namespace Viviniko\Book\Enums;
 
-class ChapterType
+class TopicType
 {
     const CHAPTER = 0;
 

@@ -4,21 +4,17 @@ namespace Viviniko\Book;
 
 use Viviniko\Book\Console\Commands\BookTableCommand;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Viviniko\Book\Models\Attr;
 use Viviniko\Book\Models\Category;
-use Viviniko\Book\Models\Chapter;
+use Viviniko\Book\Models\Topic;
 use Viviniko\Book\Models\Content;
+use Viviniko\Book\Observers\AttrObserver;
 use Viviniko\Book\Observers\CategoryObserver;
-use Viviniko\Book\Observers\ChapterObserver;
+use Viviniko\Book\Observers\TopicObserver;
 use Viviniko\Book\Observers\ContentObserver;
 
 class BookServiceProvider extends BaseServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
 
     /**
      * Bootstrap the application services.
@@ -33,8 +29,9 @@ class BookServiceProvider extends BaseServiceProvider
         ]);
 
         Category::observe(CategoryObserver::class);
-        Chapter::observe(ChapterObserver::class);
+        Topic::observe(TopicObserver::class);
         Content::observe(ContentObserver::class);
+        Attr::observe(AttrObserver::class);
 
         // Register commands
         $this->commands('command.book.table');
@@ -50,8 +47,6 @@ class BookServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/book.php', 'book');
 
         $this->registerRepositories();
-
-        $this->registerBookService();
 
         $this->registerCommands();
     }
@@ -71,13 +66,13 @@ class BookServiceProvider extends BaseServiceProvider
     protected function registerRepositories()
     {
         $this->app->singleton(
-            \Viviniko\Book\Repositories\Attribute\AttributeRepository::class,
-            \Viviniko\Book\Repositories\Attribute\EloquentAttribute::class
+            \Viviniko\Book\Repositories\AttrValue\AttrValueRepository::class,
+            \Viviniko\Book\Repositories\AttrValue\EloquentAttrValue::class
         );
 
         $this->app->singleton(
-            \Viviniko\Book\Repositories\AttributeGroup\AttributeGroupRepository::class,
-            \Viviniko\Book\Repositories\AttributeGroup\EloquentAttributeGroup::class
+            \Viviniko\Book\Repositories\Attr\AttrRepository::class,
+            \Viviniko\Book\Repositories\Attr\EloquentAttr::class
         );
 
         $this->app->singleton(
@@ -96,21 +91,13 @@ class BookServiceProvider extends BaseServiceProvider
         );
 
         $this->app->singleton(
-            \Viviniko\Book\Repositories\Chapter\ChapterRepository::class,
-            \Viviniko\Book\Repositories\Chapter\EloquentChapter::class
+            \Viviniko\Book\Repositories\Topic\TopicRepository::class,
+            \Viviniko\Book\Repositories\Topic\EloquentTopic::class
         );
 
         $this->app->singleton(
             \Viviniko\Book\Repositories\Content\ContentRepository::class,
             \Viviniko\Book\Repositories\Content\EloquentContent::class
-        );
-    }
-
-    protected function registerBookService()
-    {
-        $this->app->singleton(
-            \Viviniko\Book\Contracts\BookService::class,
-            \Viviniko\Book\Services\BookServiceImpl::class
         );
     }
 
@@ -123,14 +110,6 @@ class BookServiceProvider extends BaseServiceProvider
     public function provides()
     {
         return [
-            \Viviniko\Book\Contracts\BookService::class,
-            \Viviniko\Book\Repositories\Attribute\AttributeRepository::class,
-            \Viviniko\Book\Repositories\AttributeGroup\AttributeGroupRepository::class,
-            \Viviniko\Book\Repositories\Book\BookRepository::class,
-            \Viviniko\Book\Repositories\Category\CategoryRepository::class,
-            \Viviniko\Book\Repositories\Chapter\ChapterRepository::class,
-            \Viviniko\Book\Repositories\Content\ContentRepository::class,
-            \Viviniko\Book\Repositories\Author\AuthorRepository::class,
         ];
     }
 }

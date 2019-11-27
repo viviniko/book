@@ -3,6 +3,8 @@
 namespace Viviniko\Book\Models;
 
 use Illuminate\Support\Facades\Config;
+use Viviniko\Book\Enums\TopicStatus;
+use Viviniko\Book\Enums\TopicType;
 use Viviniko\Support\Database\Eloquent\Model;
 
 class Book extends Model
@@ -10,12 +12,10 @@ class Book extends Model
     protected $tableConfigKey = 'book.books_table';
 
     protected $fillable = [
-        'name', 'author_id', 'cover', 'description', 'latest_chapter_id', 'chapter_max_number', 'is_end',
-        'word_count', 'category_id', 'is_active', 'url_rewrite'
+        'name', 'author_id', 'image_id', 'description', 'end', 'category_id', 'slug', 'status'
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
         'is_end' => 'boolean',
     ];
 
@@ -24,23 +24,26 @@ class Book extends Model
         return $this->belongsTo(Config::get('book.author'), 'author_id');
     }
 
+    public function image()
+    {
+        return $this->belongsTo(Config::get('media.file'), 'image_id');
+    }
+
     public function category()
     {
         return $this->belongsTo(Config::get('book.category'), 'category_id');
     }
 
-    public function lastestChapter()
+    public function latestTopic()
     {
-        return $this->belongsTo(Config::get('book.chapter'), 'latest_chapter_id');
+        return $this->topics()
+            ->where(['status' => TopicStatus::PUBLISHED, 'type' => TopicType::CHAPTER])
+            ->orderBy('position')
+            ->first();
     }
 
-    public function chapters()
+    public function topics()
     {
-        return $this->hasMany(Config::get('book.chapter'));
-    }
-
-    public function attributes()
-    {
-        return $this->belongsToMany(Config::get('book.attribute'), Config::get('book.book_attribute_table'));
+        return $this->hasMany(Config::get('book.topic'));
     }
 }

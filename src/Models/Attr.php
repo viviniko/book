@@ -5,9 +5,9 @@ namespace Viviniko\Book\Models;
 use Illuminate\Support\Facades\Config;
 use Viviniko\Support\Database\Eloquent\Model;
 
-class AttributeGroup extends Model
+class Attr extends Model
 {
-    protected $tableConfigKey = 'book.attribute_groups_table';
+    protected $tableConfigKey = 'book.attrs_table';
 
     protected $fillable = [
         'name', 'is_filterable', 'is_searchable', 'is_viewable', 'sort'
@@ -15,12 +15,12 @@ class AttributeGroup extends Model
 
     protected $casts = [
         'is_filterable' => 'boolean',
-        'is_required' => 'boolean',
+        'is_searchable' => 'boolean',
         'is_viewable' => 'boolean',
     ];
 
-    public function attributes()
+    public function values()
     {
-        return $this->hasMany(Config::get('book.attribute'), 'group_id');
+        return $this->hasMany(Config::get('book.attr_value'), 'attr_id');
     }
 }

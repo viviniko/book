@@ -5,12 +5,12 @@ namespace Viviniko\Book\Models;
 use Illuminate\Support\Facades\Config;
 use Viviniko\Support\Database\Eloquent\Model;
 
-class Chapter extends Model
+class Topic extends Model
 {
-    protected $tableConfigKey = 'book.chapters_table';
+    protected $tableConfigKey = 'book.topics_table';
 
     protected $fillable = [
-        'book_id', 'parent_id', 'path', 'title', 'description', 'status', 'word_count', 'number', 'sort',
+        'book_id', 'parent_id', 'path', 'title', 'description', 'status', 'word_count', 'number', 'position',
     ];
 
     public function book()
@@ -23,13 +23,13 @@ class Chapter extends Model
         return $this->belongsTo(static::class, 'parent_id');
     }
 
-    public function chapterContent()
+    public function content()
     {
         return $this->hasOne(Config::get('book.content'));
     }
 
-    public function getContentAttribute()
+    public function getDataAttribute()
     {
-        return data_get($this->chapterContent, 'content');
+        return data_get($this->content, 'data');
     }
 }

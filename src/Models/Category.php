@@ -4,17 +4,17 @@ namespace Viviniko\Book\Models;
 
 use Illuminate\Support\Facades\Config;
 use Viviniko\Support\Database\Eloquent\Model;
-use Viviniko\Urlrewrite\UrlrewriteTrait;
+use Viviniko\Rewrite\RewriteTrait;
 
 class Category extends Model
 {
-    use UrlrewriteTrait;
+    use RewriteTrait;
 
     protected $tableConfigKey = 'book.categories_table';
 
     protected $fillable = [
-        'name', 'description', 'is_active', 'parent_id', 'path', 'sort',
-        'meta_title', 'meta_keywords', 'meta_description', 'url_rewrite',
+        'name', 'description', 'status', 'parent_id', 'path', 'position',
+        'meta_title', 'meta_keywords', 'meta_description', 'slug',
     ];
 
     protected $casts = [

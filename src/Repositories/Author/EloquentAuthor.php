@@ -2,9 +2,9 @@
 
 namespace Viviniko\Book\Repositories\Author;
 
-use Viviniko\Repository\SimpleRepository;
+use Viviniko\Repository\EloquentRepository;
 
-class EloquentAuthor extends SimpleRepository implements AuthorRepository
+class EloquentAuthor extends EloquentRepository implements AuthorRepository
 {
     protected $modelConfigKey = 'book.author';
 }

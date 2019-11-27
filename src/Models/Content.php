@@ -10,11 +10,11 @@ class Content extends Model
     protected $tableConfigKey = 'book.contents_table';
 
     protected $fillable = [
-        'chapter_id', 'content',
+        'topic_id', 'data',
     ];
 
     public function chapter()
     {
-        return $this->belongsTo(Config::get('book.chapter'));
+        return $this->belongsTo(Config::get('book.topic'));
     }
 }
