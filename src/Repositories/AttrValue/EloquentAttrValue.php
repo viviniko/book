@@ -2,9 +2,13 @@
 
 namespace Viviniko\Book\Repositories\AttrValue;
 
+use Illuminate\Support\Facades\Config;
 use Viviniko\Repository\EloquentRepository;
 
 class EloquentAttrValue extends EloquentRepository implements AttrValueRepository
 {
-    protected $modelConfigKey = 'book.attr_value';
+    public function __construct()
+    {
+        parent::__construct(Config::get('book.attr_value'));
+    }
 }

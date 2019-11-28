@@ -2,11 +2,15 @@
 
 namespace Viviniko\Book\Repositories\Attr;
 
+use Illuminate\Support\Facades\Config;
 use Viviniko\Repository\EloquentRepository;
 
 class EloquentAttr extends EloquentRepository implements AttrRepository
 {
-    protected $modelConfigKey = 'book.attr';
+    public function __construct()
+    {
+        parent::__construct(Config::get('book.attr'));
+    }
 
     /**
      * {@inheritdoc}

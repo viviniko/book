@@ -2,12 +2,13 @@
 
 namespace Viviniko\Book\Repositories\Topic;
 
-use Illuminate\Support\Collection;
-use Viviniko\Book\Enums\TopicStatus;
-use Viviniko\Book\Enums\TopicType;
+use Illuminate\Support\Facades\Config;
 use Viviniko\Repository\EloquentRepository;
 
 class EloquentTopic extends EloquentRepository implements TopicRepository
 {
-    protected $modelConfigKey = 'book.topic';
+    public function __construct()
+    {
+        parent::__construct(Config::get('book.topic'));
+    }
 }
