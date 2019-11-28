@@ -11,12 +11,4 @@ class EloquentAttr extends EloquentRepository implements AttrRepository
     {
         parent::__construct(Config::get('book.attr'));
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function listWithAttributes()
-    {
-        return $this->createModel()->newQuery()->with(['attributes'])->get();
-    }
 }
