@@ -42,6 +42,11 @@ class Book extends Model
             ->first();
     }
 
+    public function wordCount()
+    {
+        return $this->topics()->sum('word_count');
+    }
+
     public function topics()
     {
         return $this->hasMany(Config::get('book.topic'));
