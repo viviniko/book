@@ -34,21 +34,21 @@ class Book extends Model
         return $this->belongsTo(Config::get('book.category'), 'category_id');
     }
 
-    public function latestTopic()
-    {
-        return $this->topics()
-            ->where(['status' => TopicStatus::PUBLISHED, 'type' => TopicType::CHAPTER])
-            ->orderBy('position')
-            ->first();
-    }
-
-    public function wordCount()
-    {
-        return $this->topics()->sum('word_count');
-    }
-
     public function topics()
     {
         return $this->hasMany(Config::get('book.topic'));
+    }
+
+    public function getLatestTopicAttribute()
+    {
+        return $this->topics()
+            ->where(['status' => TopicStatus::PUBLISHED, 'type' => TopicType::CHAPTER])
+            ->orderBy('position', 'desc')
+            ->first();
+    }
+
+    public function getWordCountAttribute()
+    {
+        return $this->topics()->sum('word_count');
     }
 }
