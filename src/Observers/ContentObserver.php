@@ -4,19 +4,19 @@ namespace Viviniko\Book\Observers;
 
 use Illuminate\Support\Str;
 use Viviniko\Book\Models\Content;
-use Viviniko\Book\Repositories\Chapter\ChapterRepository;
+use Viviniko\Book\Repositories\Topic\TopicRepository;
 
 class ContentObserver
 {
-    protected $chapters;
+    protected $topics;
 
-    public function __construct(ChapterRepository $chapters)
+    public function __construct(TopicRepository $topics)
     {
-        $this->chapters = $chapters;
+        $this->topics = $topics;
     }
 
     public function saved(Content $content)
     {
-        $this->chapters->update($content->chapter_id, ['word_count' => Str::length($content->content)]);
+        $this->topics->update($content->topic_id, ['word_count' => Str::length($content->data)]);
     }
 }

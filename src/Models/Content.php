@@ -13,7 +13,7 @@ class Content extends Model
         'topic_id', 'data',
     ];
 
-    public function chapter()
+    public function topic()
     {
         return $this->belongsTo(Config::get('book.topic'));
     }
