@@ -117,8 +117,8 @@ class CreateBookTable extends Migration
             $table->unsignedInteger('book_id');
             $table->unsignedTinyInteger('type')->default(0);
             $table->unsignedInteger('parent_id')->default(0);
-            $table->string('path', 64)->default('');
-            $table->string('title', 64);
+            $table->string('path')->default('');
+            $table->string('title');
             $table->string('description');
             $table->Integer('status')->default(0);
             $table->unsignedInteger('word_count')->default(0);
@@ -138,7 +138,7 @@ class CreateBookTable extends Migration
         // Create table for storing attribute groups
         Schema::create($this->attrsTable, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 32);
+            $table->string('name', 64);
             $table->boolean('is_filterable')->default(false);
             $table->boolean('is_searchable')->default(false);
             $table->boolean('is_viewable')->default(false);
@@ -150,7 +150,7 @@ class CreateBookTable extends Migration
         Schema::create($this->attrValuesTable, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('attr_id');
-            $table->string('name', 32);
+            $table->string('name', 64);
             $table->integer('position')->default(0);
             $table->timestamps();
         });
