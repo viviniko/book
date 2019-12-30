@@ -3,13 +3,12 @@
 namespace Viviniko\Book\Models;
 
 use Illuminate\Support\Facades\Config;
-use Viviniko\Book\LangTrait;
 use Viviniko\Rewrite\RewriteTrait;
 use Viviniko\Support\Database\Eloquent\Model;
 
 class Topic extends Model
 {
-    use RewriteTrait, LangTrait;
+    use RewriteTrait;
 
     protected $tableConfigKey = 'book.topics_table';
 
@@ -18,9 +17,10 @@ class Topic extends Model
         'image_id', 'author_id',
     ];
 
-    protected $langAttributes = [
-        'title', 'description',
-    ];
+//    protected $casts = [
+//        'title' => 'json',
+//        'description' => 'json',
+//    ];
 
     public function parent()
     {
