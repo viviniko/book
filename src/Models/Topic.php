@@ -27,6 +27,16 @@ class Topic extends Model
         return $this->belongsTo(static::class, 'parent_id');
     }
 
+    public function children()
+    {
+        return $this->hasMany(static::class, 'parent_id');
+    }
+
+    public function getLastChildAttribute()
+    {
+        return $this->children()->latest('position')->first();
+    }
+
     public function content()
     {
         return $this->hasOne(Config::get('book.content'));
