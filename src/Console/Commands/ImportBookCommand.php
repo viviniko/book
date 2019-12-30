@@ -27,7 +27,11 @@ class ImportBookCommand extends Command
      */
     public function handle()
     {
-        $file = $this->laravel[\Viviniko\Media\Services\FileService::class]->parse($this->argument('url'));
+        $url = $this->argument('url');
+        $fileService = $this->laravel[\Viviniko\Media\Services\FileService::class];
+        $file = is_numeric($url) ? $fileService->get($this->argument('url')) : $fileService->parse($this->argument('url'));
         $lines = explode("\n", $file->content);
+        $this->info('Url: ' . $url);
+        $this->info('Lines: ' . count($lines));
     }
 }
