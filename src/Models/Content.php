@@ -9,6 +9,10 @@ class Content extends Model
 {
     protected $tableConfigKey = 'book.contents_table';
 
+    protected $primaryKey = 'topic_id';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'topic_id', 'data',
     ];

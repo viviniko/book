@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'books_table' => 'book_books',
     'categories_table' => 'book_categories',
     'presses_table' => 'book_presses',
     'contents_table' => 'book_contents',
@@ -10,7 +9,6 @@ return [
     'attr_values_table' => 'book_attr_values',
     'authors_table' => 'book_authors',
 
-    'book' => 'Viviniko\Book\Models\Book',
     'category' => 'Viviniko\Book\Models\Category',
     'topic' => 'Viviniko\Book\Models\Topic',
     'content' => 'Viviniko\Book\Models\Content',

@@ -81,11 +81,6 @@ class BookServiceProvider extends BaseServiceProvider
         );
 
         $this->app->singleton(
-            \Viviniko\Book\Repositories\Book\BookRepository::class,
-            \Viviniko\Book\Repositories\Book\EloquentBook::class
-        );
-
-        $this->app->singleton(
             \Viviniko\Book\Repositories\Category\CategoryRepository::class,
             \Viviniko\Book\Repositories\Category\EloquentCategory::class
         );

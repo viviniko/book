@@ -13,8 +13,8 @@ class Author extends Model
         'nickname', 'avatar',
     ];
 
-    public function books()
+    public function topics()
     {
-        return $this->hasMany(Config::get('book.book'), 'author_id');
+        return $this->hasMany(Config::get('book.topic'), 'author_id');
     }
 }

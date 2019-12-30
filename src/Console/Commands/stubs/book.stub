@@ -25,11 +25,6 @@ class CreateBookTable extends Migration
     /**
      * @var string
      */
-    protected $booksTable;
-
-    /**
-     * @var string
-     */
     protected $contentsTable;
 
     /**
@@ -55,7 +50,6 @@ class CreateBookTable extends Migration
         $this->categoriesTable = Config::get('book.categories_table');
         $this->pressesTable = Config::get('book.presses_table');
         $this->authorsTable = Config::get('book.authors_table');
-        $this->booksTable = Config::get('book.books_table');
         $this->contentsTable = Config::get('book.contents_table');
         $this->topicsTable = Config::get('book.topics_table');
         $this->attrsTable = Config::get('book.attrs_table');
@@ -72,16 +66,13 @@ class CreateBookTable extends Migration
         // Create table for storing categories
         Schema::create($this->categoriesTable, function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('parent_id')->default(0);
-            $table->string('name', 32);
-            $table->string('path')->default('');
+            $table->text('name');
             $table->text('description')->nullable();
+            $table->unsignedInteger('parent_id')->default(0);
+            $table->string('path')->default('');
             $table->integer('position')->default(0);
             $table->integer('status')->default(0);
             $table->string('slug')->nullable();
-            $table->string('meta_title')->nullable();
-            $table->string('meta_keywords')->nullable();
-            $table->string('meta_description')->nullable();
             $table->timestamps();
         });
 
@@ -94,33 +85,17 @@ class CreateBookTable extends Migration
             $table->timestamps();
         });
 
-        // Create table for storing books
-        Schema::create($this->booksTable, function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description');
-            $table->unsignedInteger('image_id');
-            $table->unsignedInteger('author_id');
-            $table->boolean('end')->default(false);
-            $table->unsignedInteger('category_id');
-            $table->Integer('status')->default(0);
-            $table->string('slug')->nullable();
-            $table->string('meta_title')->nullable();
-            $table->string('meta_keywords')->nullable();
-            $table->string('meta_description')->nullable();
-            $table->timestamps();
-        });
-
         // Create table for storing book chapters.
         Schema::create($this->topicsTable, function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('book_id');
-            $table->unsignedTinyInteger('type')->default(0);
+            $table->string('type', 64)->default(0);
+            $table->tinyInteger('status');
             $table->unsignedInteger('parent_id')->default(0);
-            $table->string('path')->default('');
-            $table->string('title');
-            $table->string('description');
-            $table->Integer('status')->default(0);
+            $table->unsignedInteger('image_id')->nullable();
+            $table->unsignedInteger('author_id')->nullable();
+            $table->text('title');
+            $table->text('description');
+            $table->string('slug')->nullable();
             $table->unsignedInteger('word_count')->default(0);
             $table->unsignedInteger('position')->default(0);
             $table->timestamp('published_at')->nullable();
@@ -129,7 +104,6 @@ class CreateBookTable extends Migration
 
         // Create table for storing contents
         Schema::create($this->contentsTable, function (Blueprint $table) {
-            $table->increments('id');
             $table->unsignedInteger('topic_id');
             $table->longText('data');
             $table->timestamps();
@@ -138,7 +112,7 @@ class CreateBookTable extends Migration
         // Create table for storing attribute groups
         Schema::create($this->attrsTable, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 64);
+            $table->text('name');
             $table->boolean('is_filterable')->default(false);
             $table->boolean('is_searchable')->default(false);
             $table->boolean('is_viewable')->default(false);
@@ -150,7 +124,7 @@ class CreateBookTable extends Migration
         Schema::create($this->attrValuesTable, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('attr_id');
-            $table->string('name', 64);
+            $table->text('name');
             $table->integer('position')->default(0);
             $table->timestamps();
         });
@@ -167,7 +141,6 @@ class CreateBookTable extends Migration
         Schema::dropIfExists($this->attrsTable);
         Schema::dropIfExists($this->contentsTable);
         Schema::dropIfExists($this->topicsTable);
-        Schema::dropIfExists($this->booksTable);
         Schema::dropIfExists($this->pressesTable);
         Schema::dropIfExists($this->authorsTable);
         Schema::dropIfExists($this->categoriesTable);

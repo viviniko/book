@@ -13,8 +13,7 @@ class Category extends Model
     protected $tableConfigKey = 'book.categories_table';
 
     protected $fillable = [
-        'name', 'description', 'status', 'parent_id', 'path', 'position',
-        'meta_title', 'meta_keywords', 'meta_description', 'slug',
+        'name', 'description', 'status', 'parent_id', 'path', 'position', 'slug',
     ];
 
     protected $casts = [

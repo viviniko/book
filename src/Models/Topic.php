@@ -3,20 +3,19 @@
 namespace Viviniko\Book\Models;
 
 use Illuminate\Support\Facades\Config;
+use Viviniko\Rewrite\RewriteTrait;
 use Viviniko\Support\Database\Eloquent\Model;
 
 class Topic extends Model
 {
+    use RewriteTrait;
+
     protected $tableConfigKey = 'book.topics_table';
 
     protected $fillable = [
-        'book_id', 'parent_id', 'path', 'title', 'description', 'status', 'word_count', 'number', 'position',
+        'parent_id', 'title', 'description', 'status', 'word_count', 'position', 'type', 'slug', 'published_at',
+        'image_id', 'author_id',
     ];
-
-    public function book()
-    {
-        return $this->belongsTo(Config::get('book.book'));
-    }
 
     public function parent()
     {
