@@ -7,13 +7,12 @@ use Illuminate\Support\Str;
 
 trait LangTrait
 {
-    private $lang;
+    private static $lang;
 
     protected $langAttributes = [];
 
     public function initializeLangTrait()
     {
-        $this->lang = Config::get('app.locale');
         foreach ($this->langAttributes as $attribute) {
             if (!isset($this->casts[$attribute])) {
                 $this->casts[$attribute] = 'json';
@@ -23,11 +22,20 @@ trait LangTrait
         }
     }
 
+    public static function lang($lang = null)
+    {
+        if ($lang) {
+            self::$lang = $lang;
+        }
+
+        return self::$lang ?? Config::get('app.locale');
+    }
+
     private function registerSetter($attribute)
     {
         $method = 'set'.Str::studly($attribute).'Attribute';
         $this->$method = function ($value) use ($attribute) {
-            $this->attributes[$attribute] = array_merge($this->attributes ?? [], [$this->lang => $value]);
+            $this->attributes[$attribute] = array_merge($this->attributes ?? [], [self::lang() => $value]);
         };
     }
 
@@ -35,7 +43,7 @@ trait LangTrait
     {
         $method = 'get'.Str::studly($attribute).'Attribute';
         $this->$method = function ($value) {
-            return $value[$this->lang] ?: null;
+            return $value[self::lang()] ?: null;
         };
     }
 
