@@ -3,12 +3,13 @@
 namespace Viviniko\Book\Models;
 
 use Illuminate\Support\Facades\Config;
+use Viviniko\Book\LangTrait;
 use Viviniko\Support\Database\Eloquent\Model;
 use Viviniko\Rewrite\RewriteTrait;
 
 class Category extends Model
 {
-    use RewriteTrait;
+    use RewriteTrait, LangTrait;
 
     protected $tableConfigKey = 'book.categories_table';
 
@@ -16,8 +17,8 @@ class Category extends Model
         'name', 'description', 'status', 'parent_id', 'path', 'position', 'slug',
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
+    protected $langAttributes = [
+        'name','description'
     ];
 
     public function parent()
